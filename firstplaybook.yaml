@@ -1,0 +1,28 @@
+- name: Playbook to Install Apache
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Apache
+      apt: name=apache2 update_cache=yes state=latest
+
+    - name: Install Git
+      apt: name=git update_cache=yes state=latest
+ 
+    - name: Copy your index file
+      ansible.builtin.copy:
+        src: /home/altschool/web-dev-training
+        dest: /var/www/html
+        owner: root
+        group: root
+        mode: '0644'
+ 
+  handlers:
+    - name: start-apache
+      service:
+        name: apache2
+        state: started
+        enabled: true
+    - name: restart-apache
+      service:
+        name: apache2
+        state: restarted
