@@ -7,6 +7,11 @@
 
     - name: Install Git
       apt: name=git update_cache=yes state=latest
+
+    - name: Remove default index.html
+      ansible.builtin.file:
+        path: /var/www/html/index.html
+        state: absent
  
     - name: Copy your index file
       ansible.builtin.copy:
